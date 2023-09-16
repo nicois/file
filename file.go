@@ -61,13 +61,13 @@ func ReadBytes(filename string) ([]byte, error) {
 		defer handle.Close()
 		stat, err := handle.Stat()
 		if err != nil {
-			log.Debugln("Could not stat() the cache file")
+			log.Debugf("Could not stat() %v", filename)
 			return []byte{}, err
 		}
 		result := make([]byte, stat.Size())
 		bytes_read, err := handle.Read(result)
 		if err != nil {
-			log.Debugln("Could not Read() the cache file")
+			log.Debugf("Could not Read() %v", filename)
 			return []byte{}, err
 		}
 		if int64(bytes_read) != stat.Size() {
@@ -75,6 +75,6 @@ func ReadBytes(filename string) ([]byte, error) {
 		}
 		return result, nil
 	} else {
-		return []byte{}, fmt.Errorf("File %v could not be opened, maybe as it doesn't exist: %v", filename, err)
+		return []byte{}, fmt.Errorf("File %v could not be opened; maybe as it doesn't exist: %v", filename, err)
 	}
 }
