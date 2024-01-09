@@ -51,6 +51,10 @@ func FileExists(filename string) bool {
 	if os.IsNotExist(err) {
 		return false
 	}
+	if err != nil {
+        log.Errorf("While statting %v: %v", filename, err)
+		return false
+	}
 	return !info.IsDir()
 }
 
